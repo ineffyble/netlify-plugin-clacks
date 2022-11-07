@@ -1,7 +1,6 @@
-name: 'netlify-plugin-{{name}}'
-inputs: []
-# Example inputs:
-#  - name: example
-#    description: Example description
-#    default: 5
-#    required: false
+name: 'netlify-plugin-clacks'
+inputs:
+  - name: message
+    description: Message for the Clacks
+    default: GNU Terry Pratchett
+    required: false
