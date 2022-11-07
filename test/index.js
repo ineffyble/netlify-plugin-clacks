@@ -19,6 +19,10 @@ const pluginOutput = (logs) => {
   return pluginOutput;
 }
 
+const headerValue = (netlifyConfig) => {
+  return netlifyConfig.headers.find(h => h.for === '/*').values['X-Clacks-Overhead']
+}
+
 // Unit tests are using the AVA test runner: https://github.com/avajs/ava
 // A local build is performed using the following command:
 //   netlify-build --config ../netlify.toml
@@ -40,10 +44,10 @@ test('Plugin should set Terry Pratchett header by default', async (t) => {
   })
 
   // Check that the header is set
-  t.assert(resultingConfig.headers.find(h => h.for === '/*').values['X-Clacks-Overhead'] === 'GNU Terry Pratchett');
+  t.is(headerValue(resultingConfig), 'GNU Terry Pratchett');
   
   // Check that the build logs show plugin message
-  t.assert(pluginOutput(logs) === 'X-Clacks-Overhead: GNU Terry Pratchett');
+  t.is(pluginOutput(logs), 'X-Clacks-Overhead: GNU Terry Pratchett');
 })
 
 test('Plugin should allow overriding header', async (t) => {
@@ -53,8 +57,8 @@ test('Plugin should allow overriding header', async (t) => {
   })
 
   // Check that the custom value header is set
-  t.assert(resultingConfig.headers.find(h => h.for === '/*').values['X-Clacks-Overhead'] === 'LLAP Leonard Nimoy');
+  t.is(headerValue(resultingConfig), 'LLAP Leonard Nimoy');
   
   // Check that the build logs show customised plugin message
-  t.assert(pluginOutput(logs) === 'X-Clacks-Overhead: LLAP Leonard Nimoy');
+  t.is(pluginOutput(logs), 'X-Clacks-Overhead: LLAP Leonard Nimoy');
 })

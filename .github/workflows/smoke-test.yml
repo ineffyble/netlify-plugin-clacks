@@ -1,0 +1,27 @@
+name: Smoke Test
+on: [push]
+jobs:
+  Smoke-Test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install modules
+        run: npm ci
+
+      - name: Wait for Netlify
+        uses: probablyup/wait-for-netlify-action@3.2.0
+        id: waitForDeployment
+        with:
+          site_id: '38e1ce9f-2eea-44ac-a683-d7d7e5e93f1c'
+        env:
+          NETLIFY_TOKEN: ${{ secrets.NETLIFY_TOKEN }}
+
+      - name: Run smoketest
+        run: npm run smoketest
+        env:
+          SMOKE_TEST_URL: ${{ steps.waitForDeployment.outputs.url }}
