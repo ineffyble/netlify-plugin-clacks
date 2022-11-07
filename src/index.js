@@ -7,7 +7,7 @@ export const onPreBuild = async function ({ netlifyConfig, inputs, utils }) {
   netlifyConfig.headers.push({
     for: '/*',
     values: {
-      'X-Clacks-Overhead': message,
+      'X-Clacks-Overheadbroken': message,
     },
   })
 }
