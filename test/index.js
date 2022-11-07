@@ -40,7 +40,7 @@ test('Plugin should set Terry Pratchett header by default', async (t) => {
   })
 
   // Check that the header is set
-  t.assert(resultingConfig.headers.find(h => h.for === '/').values['X-Clacks-Overhead'] === 'GNU Terry Pratchett');
+  t.assert(resultingConfig.headers.find(h => h.for === '/*').values['X-Clacks-Overhead'] === 'GNU Terry Pratchett');
   
   // Check that the build logs show plugin message
   t.assert(pluginOutput(logs) === 'X-Clacks-Overhead: GNU Terry Pratchett');
@@ -53,7 +53,7 @@ test('Plugin should allow overriding header', async (t) => {
   })
 
   // Check that the custom value header is set
-  t.assert(resultingConfig.headers.find(h => h.for === '/').values['X-Clacks-Overhead'] === 'LLAP Leonard Nimoy');
+  t.assert(resultingConfig.headers.find(h => h.for === '/*').values['X-Clacks-Overhead'] === 'LLAP Leonard Nimoy');
   
   // Check that the build logs show customised plugin message
   t.assert(pluginOutput(logs) === 'X-Clacks-Overhead: LLAP Leonard Nimoy');
